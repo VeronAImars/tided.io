@@ -1,0 +1,488 @@
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f0f1f4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1a0d1c" media="(prefers-color-scheme: dark)">
+<title>tided</title>
+<link rel="icon" href="brand/favicon.ico" sizes="32x32">
+<link rel="icon" href="brand/hammerhead.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="brand/hammerhead-1024.png">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500;700&display=swap">
+<style>
+/* Layout: QuickBooks structure. One deep plum band for chrome, white body, big light type, grey chips, one hot orange used for one thing at a time. */
+:root{
+  --plum:#241226; --plum-2:#4a2150; --plum-text:#cdbfd0;
+  --ink:#1b1523; --muted:#6a6572; --muted-2:#514b59;
+  --ground:#ffffff; --surface:#f0f1f4; --line:#e3e4e8; --line-2:#c4c6cc;
+  --heat:#d9480f; --heat-press:#b93c0a; --heat-tint:#fde8dc; --heat-tint-line:#f2b79a; --heat-on-dark:#f28a4a;
+  --accent:#4a2150; --accent-press:#351333; --accent-ink:#ffffff; --accent-ring:rgba(74,33,80,.18);
+  --bar:rgba(255,255,255,.9); --bar-ink:#1b1523; --bar-muted:#6a6572; --bar-hover:rgba(27,21,35,.06); --bar-line:#e3e4e8; --strip:#f0f1f4; --strip-ink:#514b59; --strip-sep:rgba(27,21,35,.14); --sheet:#ffffff; --bar-btn:#4a2150; --bar-btn-ink:#ffffff; --bar-btn-hover:#351333;
+  --fresh:#2f6b3a; --fresh-tint:#e3f1e6; --fresh-text:#1f5a2c;
+  --stale:#a16b00; --stale-tint:#fbf1d6; --stale-text:#7a5000;
+  --grid:rgba(27,21,35,.045);
+  --sans:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --ink:#efe9f2; --muted:#a79fae; --muted-2:#c3bbc9;
+  --ground:#140e17; --surface:#1f1623; --line:#2d2232; --line-2:#3f3146;
+  --heat:#f28a4a; --heat-press:#f7a26c; --heat-tint:#3a1d12; --heat-tint-line:#6b3419;
+  --accent:#7b4a80; --accent-press:#8f5a94; --accent-ink:#ffffff; --accent-ring:rgba(164,106,168,.28);
+  --bar:rgba(36,18,38,.92); --bar-ink:#ffffff; --bar-muted:#cdbfd0; --bar-hover:rgba(255,255,255,.07); --bar-line:rgba(255,255,255,.1); --strip:#1a0d1c; --strip-ink:#cdbfd0; --strip-sep:rgba(255,255,255,.18); --sheet:#241226; --bar-btn:#f1e8f3; --bar-btn-ink:#241226; --bar-btn-hover:#ffffff;
+  --fresh:#7fcf8e; --fresh-tint:#15301b; --fresh-text:#a9e2b3;
+  --stale:#e0b24a; --stale-tint:#33270a; --stale-text:#f1cf7a;
+  --grid:rgba(239,233,242,.05);
+  color-scheme:dark } }
+:root[data-theme="dark"]{
+  --ink:#efe9f2; --muted:#a79fae; --muted-2:#c3bbc9;
+  --ground:#140e17; --surface:#1f1623; --line:#2d2232; --line-2:#3f3146;
+  --heat:#f28a4a; --heat-press:#f7a26c; --heat-tint:#3a1d12; --heat-tint-line:#6b3419;
+  --accent:#7b4a80; --accent-press:#8f5a94; --accent-ink:#ffffff; --accent-ring:rgba(164,106,168,.28);
+  --bar:rgba(36,18,38,.92); --bar-ink:#ffffff; --bar-muted:#cdbfd0; --bar-hover:rgba(255,255,255,.07); --bar-line:rgba(255,255,255,.1); --strip:#1a0d1c; --strip-ink:#cdbfd0; --strip-sep:rgba(255,255,255,.18); --sheet:#241226; --bar-btn:#f1e8f3; --bar-btn-ink:#241226; --bar-btn-hover:#ffffff;
+  --fresh:#7fcf8e; --fresh-tint:#15301b; --fresh-text:#a9e2b3;
+  --stale:#e0b24a; --stale-tint:#33270a; --stale-text:#f1cf7a;
+  --grid:rgba(239,233,242,.05);
+  color-scheme:dark }
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.5}
+a{color:inherit}
+h1,h2,h3{margin:0;text-wrap:balance;letter-spacing:-.02em}
+h1{font-size:clamp(34px,5.2vw,58px);font-weight:300;line-height:1.08}
+h2{font-size:clamp(26px,3.2vw,36px);font-weight:300;line-height:1.15}
+h3{font-size:19px;font-weight:500}
+p{margin:0}
+.mono{font-family:var(--mono)}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 22px;border-radius:999px;border:0;background:var(--accent);color:var(--accent-ink);font:inherit;font-weight:600;text-decoration:none;cursor:pointer}
+.btn:hover{background:var(--accent-press)}
+.btn:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.btn.quiet{background:transparent;color:var(--ink);border:1px solid var(--line-2);font-weight:500}
+.btn.quiet:hover{background:var(--surface)}
+.chip{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 16px;border-radius:999px;background:var(--surface);color:var(--ink);font-size:15px;font-weight:500;border:1px solid transparent}
+.chip.on{background:var(--heat-tint);color:var(--heat-press);border-color:var(--heat-tint-line)}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:500;white-space:nowrap}
+.pill.fresh{background:var(--fresh-tint);color:var(--fresh-text)}
+.pill.stale{background:var(--stale-tint);color:var(--stale-text)}
+.pill.live{background:var(--heat-tint);color:var(--heat-press)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--heat);flex:none}
+.dot.fresh{background:var(--fresh)} .dot.stale{background:var(--stale)}
+
+/* chrome */
+.band{background:var(--plum);color:#fff}
+header::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--strip);z-index:30}
+/* utility strip */
+.strip{background:var(--strip);color:var(--strip-ink);font-family:var(--mono);font-size:12px;letter-spacing:.02em}
+.strip .wrap{display:flex;align-items:center;gap:18px;min-height:34px;flex-wrap:wrap}
+.strip a{text-decoration:none}
+.strip a:hover{color:var(--bar-ink)}
+.strip .sep{width:1px;height:12px;background:var(--strip-sep)}
+.strip .right{margin-left:auto;display:flex;gap:18px;align-items:center}
+.strip .live{display:inline-flex;align-items:center;gap:7px}
+/* main bar */
+.site{position:sticky;top:0;z-index:20;background:var(--bar);-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px);color:var(--bar-ink)}
+.site::after{content:"";display:block;height:1px;background:var(--bar-line)}
+:root[data-theme="dark"] .site::after{background:linear-gradient(90deg,var(--heat-on-dark) 0,rgba(242,138,74,.35) 28%,rgba(255,255,255,.08) 60%,transparent 100%)}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .site::after{background:linear-gradient(90deg,var(--heat-on-dark) 0,rgba(242,138,74,.35) 28%,rgba(255,255,255,.08) 60%,transparent 100%)} }
+.nav{display:flex;align-items:center;gap:8px;min-height:68px}
+.mark{display:inline-flex;align-items:center;gap:11px;text-decoration:none;color:var(--bar-ink);margin-right:18px}
+.mark .tile{width:36px;height:40px;border-radius:9px;background:linear-gradient(160deg,var(--plum-2),#2d1631);display:grid;place-items:center;flex:none;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.mark .word{font-family:var(--mono);font-weight:700;font-size:19px;letter-spacing:-.03em;line-height:1}
+.mark .tag{display:block;font-family:var(--sans);font-size:11px;color:var(--bar-muted);font-weight:400;letter-spacing:.02em;margin-top:3px}
+.menu{display:flex;align-items:center;gap:2px;margin:0;padding:0;list-style:none}
+.menu > li{position:relative}
+.menu a,.menu summary{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:0 12px;border-radius:8px;color:var(--bar-ink);font-size:15px;text-decoration:none;cursor:pointer;list-style:none;white-space:nowrap}
+.menu summary::-webkit-details-marker{display:none}
+.menu a:hover,.menu summary:hover,.menu details[open] > summary{background:var(--bar-hover);color:var(--bar-ink)}
+.menu .chev{width:12px;height:12px;opacity:.7;transition:transform .15s}
+.menu details[open] .chev{transform:rotate(180deg)}
+.panel{position:absolute;top:calc(100% + 10px);left:0;min-width:520px;background:var(--ground);color:var(--ink);border:1px solid var(--line);border-radius:14px;box-shadow:0 18px 50px rgba(27,21,35,.22);padding:10px;display:grid;grid-template-columns:1fr 1fr;gap:4px;z-index:25}
+.panel::before{content:"";position:absolute;top:-6px;left:26px;width:10px;height:10px;background:var(--ground);border-left:1px solid var(--line);border-top:1px solid var(--line);transform:rotate(45deg)}
+.panel a{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-height:0;padding:11px 12px;border-radius:9px;color:var(--ink);font-size:15px;white-space:normal}
+.panel a:hover{background:var(--surface);color:var(--ink)}
+.panel a b{font-weight:500}
+.panel a small{font-size:13px;color:var(--muted);line-height:1.35}
+.panel a .k{font-family:var(--mono);font-size:11px;color:var(--heat);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+.panel .foot{grid-column:1/-1;display:flex;align-items:center;gap:10px;padding:10px 12px 4px;border-top:1px solid var(--line);margin-top:4px;font-size:13px;color:var(--muted)}
+.panel .foot a{flex-direction:row;padding:0;color:var(--heat-press);font-size:13px;margin-left:auto}
+.panel .foot a:hover{background:none;text-decoration:underline}
+.tools{margin-left:auto;display:flex;align-items:center;gap:6px}
+.ibtn{display:inline-flex;align-items:center;gap:7px;min-height:38px;padding:0 11px;border-radius:8px;color:var(--bar-ink);text-decoration:none;font-size:14px;border:0;background:transparent;font:inherit;cursor:pointer}
+.ibtn:hover{background:var(--bar-hover);color:var(--bar-ink)}
+.ibtn .n{font-family:var(--mono);font-size:12px;color:var(--bar-muted)}
+.tools .btn{min-height:40px;padding:0 18px;margin-left:8px;background:var(--bar-btn);color:var(--bar-btn-ink)}
+.tools .btn:hover{background:var(--bar-btn-hover)}
+.burger{display:none}
+.burger summary{list-style:none;display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:8px;cursor:pointer;color:var(--bar-ink)}
+.burger summary::-webkit-details-marker{display:none}
+.burger summary:hover{background:var(--bar-hover)}
+.sheet{position:absolute;left:0;right:0;top:100%;background:var(--sheet);border-top:1px solid var(--bar-line);box-shadow:0 18px 40px rgba(27,21,35,.18);padding:12px 16px 18px;display:flex;flex-direction:column;gap:2px}
+.sheet a{display:block;padding:11px 10px;border-radius:8px;color:var(--bar-ink);text-decoration:none;font-size:16px}
+.sheet a:hover{background:var(--bar-hover);color:var(--bar-ink)}
+.sheet .grp{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--bar-muted);padding:12px 10px 4px}
+
+/* hero */
+.hero{position:relative;padding-block:64px 56px;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:46px 46px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:48px;align-items:center}
+.hero .copy{display:flex;flex-direction:column;gap:22px;max-width:560px}
+.hero .lede{font-size:19px;color:var(--muted-2);max-width:52ch}
+.hero .ctas{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.hero .fine{font-size:14px;color:var(--muted)}
+.agents{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:14px;color:var(--muted)}
+.agents span{padding:4px 10px;border:1px solid var(--line);border-radius:999px}
+
+/* tide table card */
+.table{background:var(--ground);border:1px solid var(--line);border-radius:14px;box-shadow:0 10px 36px rgba(27,21,35,.10);overflow:hidden;min-width:0}
+.table .head{display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line)}
+.table .head .t{font-weight:500}
+.table .head .r{margin-left:auto}
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:14px;align-items:center;padding:13px 18px;border-bottom:1px solid var(--line);font-size:15px}
+.row:last-child{border-bottom:0}
+.row .name{display:flex;flex-direction:column;gap:2px;min-width:0}
+.row .name small{color:var(--muted);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .when{font-family:var(--mono);font-size:13px;color:var(--muted-2);font-variant-numeric:tabular-nums}
+.table .foot{display:flex;align-items:center;gap:10px;padding:12px 18px;background:var(--surface);font-size:13px;color:var(--muted-2);font-family:var(--mono)}
+
+/* sections */
+section{padding-block:72px}
+section.alt{background:var(--surface)}
+.sec-head{display:flex;flex-direction:column;gap:12px;max-width:640px;margin-bottom:36px}
+.sec-head p{color:var(--muted-2);font-size:18px}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.three > div{display:flex;flex-direction:column;gap:10px;min-width:0}
+.three p{color:var(--muted-2);font-size:16px}
+.three .k{font-family:var(--mono);font-size:13px;color:var(--heat);font-weight:500}
+
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;counter-reset:s}
+.step{display:flex;flex-direction:column;gap:12px;min-width:0}
+.step::before{counter-increment:s;content:counter(s);font-family:var(--mono);font-size:13px;color:var(--muted);border:1px solid var(--line-2);border-radius:999px;width:28px;height:28px;display:grid;place-items:center}
+.step p{color:var(--muted-2);font-size:16px}
+pre{margin:0;background:var(--plum);color:#efe9f2;border-radius:10px;padding:14px 16px;font-family:var(--mono);font-size:13px;line-height:1.55;overflow-x:auto}
+pre .c{color:var(--plum-text)} pre .h{color:var(--heat-on-dark)}
+
+.modules{display:flex;flex-wrap:wrap;gap:10px}
+
+.tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.tier{display:flex;flex-direction:column;gap:14px;padding:26px;border:1px solid var(--line);border-radius:14px;background:var(--ground);min-width:0}
+.tier.hot{border-color:var(--accent);box-shadow:0 10px 36px var(--accent-ring)}
+.tier .price{font-size:30px;font-weight:300;letter-spacing:-.02em}
+.tier .price small{font-size:14px;color:var(--muted);font-weight:400;letter-spacing:0}
+.tier ul{margin:0;padding-left:18px;color:var(--muted-2);font-size:15px;display:flex;flex-direction:column;gap:6px}
+.tier .who{font-size:14px;color:var(--muted)}
+
+footer{padding-block:28px 40px}
+footer .wrap{display:flex;gap:18px;flex-wrap:wrap;align-items:center;font-size:14px;color:var(--plum-text)}
+footer .right{margin-left:auto;display:flex;gap:18px}
+.egg{color:inherit;text-decoration:none;border-bottom:1px dotted transparent;transition:border-color .2s}
+.egg:hover{border-bottom-color:var(--heat)}
+footer .egg{opacity:.55} footer .egg:hover{opacity:1}
+footer a{text-decoration:none}
+
+@media (max-width:860px){
+  .hero .wrap{grid-template-columns:1fr}
+  .three,.steps,.tiers{grid-template-columns:1fr}
+  .menu,.tools .ibtn,.mark .tag,.strip .right{display:none}
+  .burger{display:block}
+  .tools .btn{margin-left:0}
+}
+@media (max-width:1040px){ .strip .right .live{display:none} }
+@media (prefers-reduced-motion:no-preference){
+  .dot.live{animation:pulse 2.4s ease-in-out infinite}
+  @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(217,72,15,.35)}50%{box-shadow:0 0 0 6px rgba(217,72,15,0)}}
+}
+</style>
+<script>
+(function(){
+  var root=document.documentElement, key='tided-theme';
+  try{var v=localStorage.getItem(key); if(v==='light'||v==='dark') root.setAttribute('data-theme',v);}catch(e){}
+  function label(){ var l=document.getElementById('theme-label'); if(l) l.textContent=root.getAttribute('data-theme')||'system'; }
+  document.addEventListener('DOMContentLoaded',function(){
+    label();
+    var b=document.getElementById('theme'); if(!b) return;
+    b.addEventListener('click',function(){
+      var cur=root.getAttribute('data-theme'), next=cur==='dark'?'light':cur==='light'?null:'dark';
+      if(next) root.setAttribute('data-theme',next); else root.removeAttribute('data-theme');
+      try{ next?localStorage.setItem(key,next):localStorage.removeItem(key);}catch(e){}
+      label();
+    });
+    // close an open menu panel when clicking elsewhere
+    document.addEventListener('click',function(e){
+      document.querySelectorAll('.menu details[open]').forEach(function(d){ if(!d.contains(e.target)) d.removeAttribute('open'); });
+    });
+  });
+})();
+</script>
+
+<header>
+  <div class="strip">
+    <div class="wrap">
+      <span>tided 0.1 · open source engine · Apache-2.0</span>
+      <span class="sep"></span>
+      <span>macOS 14+ · Apple silicon</span>
+      <div class="right">
+        <span class="live"><span class="dot live" style="width:6px;height:6px"></span>all modules fresh</span>
+        <a href="#how">changelog</a>
+        <a href="#pricing">sign in</a>
+      </div>
+    </div>
+  </div>
+  <div class="site">
+    <div class="wrap nav">
+      <a class="mark" href="#top" aria-label="tided home">
+        <span class="tile"><svg width="22" height="30" viewBox="-24.4 -33.5 454.7 626.1" role="img" aria-label="hammerhead mark"><path fill="#ffffff" fill-rule="evenodd" d="M 173 345 L 183 392 L 190 411 L 203 436 L 221 460 L 237 476 L 271 503 L 287 518 L 297 531 L 304 545 L 308 558 L 311 558 L 313 551 L 312 515 L 305 490 L 297 474 L 288 461 L 275 448 L 227 417 L 202 394 L 185 370 Z M 245 291 L 232 337 L 244 339 L 257 344 L 277 356 L 277 347 L 272 329 L 260 308 L 250 295 Z M 157 291 L 149 298 L 134 321 L 127 338 L 125 355 L 144 344 L 161 338 L 170 337 Z M 273 151 L 278 179 L 279 204 L 277 224 L 271 247 L 290 241 L 309 241 L 328 245 L 348 252 L 366 261 L 384 272 L 405 289 L 403 277 L 394 255 L 372 224 L 348 200 L 325 182 L 302 167 Z M 131 151 L 107 164 L 79 182 L 54 202 L 34 222 L 10 255 L 2 274 L 0 286 L 16 273 L 33 262 L 55 251 L 69 246 L 93 241 L 115 241 L 134 247 L 129 233 L 125 212 L 125 183 Z M 32 44 L 24 53 L 22 66 L 26 81 L 31 90 L 37 96 L 52 101 L 116 101 L 125 105 L 135 116 L 133 107 L 130 102 L 124 96 L 115 91 L 102 89 L 61 95 L 48 95 L 43 89 L 42 79 L 48 72 L 98 57 L 117 49 L 154 29 L 156 30 L 147 44 L 125 64 L 150 63 L 157 66 L 166 75 L 171 90 L 171 103 L 167 121 L 152 163 L 146 188 L 145 216 L 147 234 L 148 235 L 150 212 L 152 204 L 154 203 L 165 271 L 175 313 L 187 352 L 194 368 L 209 391 L 231 411 L 225 401 L 219 384 L 217 372 L 218 348 L 241 250 L 248 206 L 252 206 L 256 236 L 259 213 L 256 180 L 234 113 L 232 100 L 233 87 L 239 73 L 245 67 L 251 64 L 280 64 L 257 43 L 249 30 L 251 29 L 276 43 L 300 54 L 329 64 L 356 71 L 360 73 L 364 78 L 364 88 L 358 95 L 348 95 L 308 89 L 297 89 L 282 95 L 275 102 L 271 109 L 270 117 L 277 107 L 288 101 L 356 100 L 368 97 L 377 89 L 384 74 L 386 60 L 382 49 L 375 43 L 368 40 L 301 25 L 249 6 L 217 0 L 190 0 L 169 3 L 148 9 L 106 25 L 39 41 Z M 200 325 L 203 325 L 206 328 L 206 331 L 202 334 L 197 330 Z M 200 287 L 205 288 L 210 294 L 209 300 L 202 305 L 196 303 L 193 299 L 194 291 Z M 199 241 L 205 242 L 211 249 L 211 256 L 205 262 L 198 262 L 194 260 L 190 253 L 192 246 Z M 194 201 L 202 199 L 211 204 L 213 208 L 213 214 L 207 222 L 197 223 L 190 217 L 189 208 Z M 197 155 L 205 155 L 209 157 L 214 165 L 213 173 L 209 178 L 205 180 L 197 180 L 192 177 L 189 172 L 189 163 Z"/></svg></span>
+        <span><span class="word">tided</span><span class="tag">grounding, kept current</span></span>
+      </a>
+
+      <ul class="menu" aria-label="Site">
+        <li>
+          <details name="nav">
+            <summary>Product <svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></summary>
+            <div class="panel">
+              <a href="#why"><span class="k">keeper</span><b>Desktop app</b><small>The daemon and its tide table, on your Mac.</small></a>
+              <a href="#how"><span class="k">cli</span><b>tided</b><small>add, status, mcp. One binary, Homebrew.</small></a>
+              <a href="#modules"><span class="k">modules</span><b>What stays fresh</b><small>Sites, docs, feeds, folders. Make your own.</small></a>
+              <a href="#how"><span class="k">mcp</span><b>Agent server</b><small>Claude Code, Cursor, Codex, local models.</small></a>
+              <a href="#pricing"><span class="k">ephemeris</span><b>Model line</b><small>Tuned, quantized, dated. Fresh or stale like any module.</small></a>
+              <a href="#pricing"><span class="k">team</span><b>Shared server</b><small>One set of facts for everyone, self-run.</small></a>
+              <div class="foot">Open source engine, flat price for the keeper. <a href="#why">Why a tide</a></div>
+            </div>
+          </details>
+        </li>
+        <li>
+          <details name="nav">
+            <summary>Docs <svg class="chev" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2.5 4.5 6 8l3.5-3.5"/></svg></summary>
+            <div class="panel" style="min-width:440px">
+              <a href="#how"><b>Quickstart</b><small>Install, add a module, point your agent.</small></a>
+              <a href="#how"><b>Writing a module</b><small>A source, a schedule, a shape.</small></a>
+              <a href="#how"><b>MCP reference</b><small>Tools, resources, bounded reads.</small></a>
+              <a href="#modules"><b>Module registry</b><small>Published modules you can add in one line.</small></a>
+              <div class="foot">Questions land in GitHub Discussions. <a href="https://github.com/veronaimars/tided">Open</a></div>
+            </div>
+          </details>
+        </li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#why">Blog</a></li>
+      </ul>
+
+      <div class="tools">
+        <a class="ibtn" href="https://github.com/veronaimars/tided" aria-label="tided on GitHub">
+          <svg viewBox="0 0 16 16" width="16" height="16" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58.0.0 3.58.0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38.0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95.0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12.0.0.67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15.0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48.0 1.07-.01 1.93-.01 2.2.0.21.15.46.55.38A8.013 8.013.0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          <span>GitHub</span>
+        </a>
+        <button class="ibtn" id="theme" type="button" aria-label="colour theme: system, activate to change">
+          <svg viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="8" cy="8" r="5.5"/><path d="M8 2.5v11" /><path d="M8 2.5a5.5 5.5 0 0 1 0 11z" fill="currentColor" stroke="none"/></svg>
+          <span class="n" id="theme-label">system</span>
+        </button>
+        <a class="btn" href="#pricing">Download for Mac</a>
+        <details class="burger">
+          <summary aria-label="menu"><svg viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14"/></svg></summary>
+          <nav class="sheet" aria-label="Site, small screens">
+            <span class="grp">product</span>
+            <a href="#why">Desktop app</a><a href="#how">CLI</a><a href="#modules">Modules</a><a href="#how">Agent server</a>
+            <span class="grp">more</span>
+            <a href="#how">Docs</a><a href="#pricing">Pricing</a><a href="#why">Blog</a><a href="https://github.com/veronaimars/tided">GitHub</a>
+          </nav>
+        </details>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <div class="copy">
+      <span class="eyebrow">a daemon for your agent's grounding</span>
+      <h1>Your agent's grounding, kept current.</h1>
+      <p class="lede">tided keeps the outside world fresh on your own machine: your site, your docs, the pages you watch, the feeds you trust. Your agent reads it through MCP. Nothing is fetched per query, and nothing is metered.</p>
+      <div class="ctas">
+        <a class="btn" href="#pricing">Download for Mac</a>
+        <a class="btn quiet" href="#how"><span class="mono" style="font-size:14px">brew install tided</span></a>
+      </div>
+      <div class="agents"><span>Claude Code</span><span>Cursor</span><span>Codex</span><span>Any local model</span></div>
+      <p class="fine">Signed and notarized Mac app, or <code class="mono">brew install tided</code>. Same daemon either way. Nothing leaves this Mac.</p>
+    </div>
+
+    <div class="table" aria-label="Example tide table">
+      <div class="head">
+        <span class="dot live"></span>
+        <span class="t">Tide table</span>
+        <span class="pill live r">tided running · local</span>
+      </div>
+      <div class="row">
+        <div class="name">My website <small><a class="egg" href="https://oakfall.app" title="a quiet writing app">oakfall.app</a> · 212 pages</small></div>
+        <span class="when">06:40 · 4 min ago</span>
+        <span class="pill fresh"><span class="dot fresh"></span>Fresh</span>
+      </div>
+      <div class="row">
+        <div class="name">Product docs <small><a class="egg" href="https://k3sm.io" title="kubernetes for macOS, natively">docs.k3sm.io</a> · 1,480 pages</small></div>
+        <span class="when">06:40 · 4 min ago</span>
+        <span class="pill fresh"><span class="dot fresh"></span>Fresh</span>
+      </div>
+      <div class="row">
+        <div class="name">Competitors' pages <small>7 sites · pricing and changelogs</small></div>
+        <span class="when">daily · 3 d ago</span>
+        <span class="pill stale"><span class="dot stale"></span>Stale · 3 d</span>
+      </div>
+      <div class="row">
+        <div class="name">Threat indicators <small>module · 6 feeds</small></div>
+        <span class="when">hourly · 12 min ago</span>
+        <span class="pill fresh"><span class="dot fresh"></span>Fresh</span>
+      </div>
+      <div class="row">
+        <div class="name">A folder on disk <small>~/Research · 3,912 files</small></div>
+        <span class="when">on change · now</span>
+        <span class="pill fresh"><span class="dot fresh"></span>Fresh</span>
+      </div>
+      <div class="foot">next high water 12:40 · 4 modules fresh · 1 due</div>
+    </div>
+  </div>
+</section>
+
+<section id="why">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">why a tide</span>
+      <h2>A tide comes in whether or not you asked.</h2>
+      <p>Search APIs fetch when your agent calls, then bill you for the call. A tide is continuous, scheduled, and driven from outside. That is the difference.</p>
+    </div>
+    <div class="three">
+      <div>
+        <span class="k">continuous</span>
+        <h3>Current before the question</h3>
+        <p>tided refreshes each module on its own schedule, so the answer is already on disk when your agent asks. No cold fetch, no waiting on a crawl.</p>
+      </div>
+      <div>
+        <span class="k">owned</span>
+        <h3>Your machine, your data, flat price</h3>
+        <p>The engine runs locally and the data stays local. You pay a flat rate for the keeper, never per query, never per token. Open source engine.</p>
+      </div>
+      <div>
+        <span class="k">modules</span>
+        <h3>Pick what stays fresh</h3>
+        <p>A module is a source, a schedule, and a shape. Use ours, or make your own in a minute. Share one with your team.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how" class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">how it works</span>
+      <h2>Three steps, then forget it is there.</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <h3>Install and add a module</h3>
+        <p>One command. Add a site, a folder, a feed, or a module someone else published.</p>
+<pre><span class="c">$</span> brew install tided
+<span class="c">$</span> tided add <a class="egg" href="https://oakfall.app"><span class="h">https://oakfall.app</span></a>
+<span class="c">added · my website · every 6 h · 212 pages</span></pre>
+      </div>
+      <div class="step">
+        <h3>tided keeps it current</h3>
+        <p>The daemon fetches on schedule, keeps what changed, and marks each module fresh or stale. Fetching is polite and isolated from your data.</p>
+<pre><span class="c">$</span> tided status
+my website         fresh   4 min ago
+product docs       fresh   4 min ago
+competitors        <span class="h">stale   3 d</span></pre>
+      </div>
+      <div class="step">
+        <h3>Your agent reads it over MCP</h3>
+        <p>Point Claude Code, Cursor, Codex, or a local model at the local server. Exact, bounded reads. No ranking black box.</p>
+<pre>{ <span class="c">"mcpServers"</span>: {
+    <span class="c">"tided"</span>: { "command": "tided", "args": ["mcp"] }
+} }</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="modules">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">modules</span>
+      <h2>What should your agent always have current?</h2>
+      <p>Start with these. Make your own with a URL, a schedule, and a shape.</p>
+    </div>
+    <div class="modules">
+      <span class="chip on"><span class="dot"></span>My website</span>
+      <span class="chip on"><span class="dot"></span>Product docs</span>
+      <span class="chip">Competitors' pages</span>
+      <span class="chip">News and RSS</span>
+      <span class="chip">Weather</span>
+      <span class="chip">Travel prices</span>
+      <span class="chip">Coupons</span>
+      <span class="chip">Threat indicators</span>
+      <span class="chip">A folder on disk</span>
+      <span class="chip">Package changelogs</span>
+      <span class="chip">Make your own</span>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">pricing</span>
+      <h2>Flat. Never metered.</h2>
+      <p>The engine is open source. You pay for the keeper, and for a shared server when there is a team.</p>
+    </div>
+    <div class="tiers">
+      <div class="tier">
+        <span class="eyebrow">free</span>
+        <span class="price">$0</span>
+        <ul>
+          <li>Open source engine</li>
+          <li>Desktop app, signed and notarized</li>
+          <li>CLI via Homebrew, same daemon</li>
+          <li>All modules, no cap</li>
+          <li>MCP server, local only</li>
+        </ul>
+        <span class="who">For one person and their agent.</span>
+        <a class="btn quiet" href="#top">Download for Mac</a>
+      </div>
+      <div class="tier hot">
+        <span class="eyebrow">pro</span>
+        <span class="price">$9 <small>per month, flat</small></span>
+        <ul>
+          <li>Everything in Free</li>
+          <li>Sync across your machines</li>
+          <li>Hosted keeper when the laptop is closed</li>
+          <li>Model editions as they ship</li>
+        </ul>
+        <span class="who">For someone whose agent works while they sleep.</span>
+        <a class="btn" href="#top">Start Pro</a>
+      </div>
+      <div class="tier">
+        <span class="eyebrow">team</span>
+        <span class="price">$19 <small>per seat, per month</small></span>
+        <ul>
+          <li>Shared context server, self-run</li>
+          <li>Modules shared across the team</li>
+          <li>Sign-in with Google or GitHub</li>
+          <li>Audit log and per-module permissions</li>
+        </ul>
+        <span class="who">For a team that wants one set of fresh facts.</span>
+        <a class="btn quiet" href="#top">Talk to us</a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="band">
+  <div class="wrap">
+    <svg width="18" height="25" viewBox="-24.4 -33.5 454.7 626.1" aria-hidden="true"><path fill="#cdbfd0" fill-rule="evenodd" d="M 173 345 L 183 392 L 190 411 L 203 436 L 221 460 L 237 476 L 271 503 L 287 518 L 297 531 L 304 545 L 308 558 L 311 558 L 313 551 L 312 515 L 305 490 L 297 474 L 288 461 L 275 448 L 227 417 L 202 394 L 185 370 Z M 245 291 L 232 337 L 244 339 L 257 344 L 277 356 L 277 347 L 272 329 L 260 308 L 250 295 Z M 157 291 L 149 298 L 134 321 L 127 338 L 125 355 L 144 344 L 161 338 L 170 337 Z M 273 151 L 278 179 L 279 204 L 277 224 L 271 247 L 290 241 L 309 241 L 328 245 L 348 252 L 366 261 L 384 272 L 405 289 L 403 277 L 394 255 L 372 224 L 348 200 L 325 182 L 302 167 Z M 131 151 L 107 164 L 79 182 L 54 202 L 34 222 L 10 255 L 2 274 L 0 286 L 16 273 L 33 262 L 55 251 L 69 246 L 93 241 L 115 241 L 134 247 L 129 233 L 125 212 L 125 183 Z M 32 44 L 24 53 L 22 66 L 26 81 L 31 90 L 37 96 L 52 101 L 116 101 L 125 105 L 135 116 L 133 107 L 130 102 L 124 96 L 115 91 L 102 89 L 61 95 L 48 95 L 43 89 L 42 79 L 48 72 L 98 57 L 117 49 L 154 29 L 156 30 L 147 44 L 125 64 L 150 63 L 157 66 L 166 75 L 171 90 L 171 103 L 167 121 L 152 163 L 146 188 L 145 216 L 147 234 L 148 235 L 150 212 L 152 204 L 154 203 L 165 271 L 175 313 L 187 352 L 194 368 L 209 391 L 231 411 L 225 401 L 219 384 L 217 372 L 218 348 L 241 250 L 248 206 L 252 206 L 256 236 L 259 213 L 256 180 L 234 113 L 232 100 L 233 87 L 239 73 L 245 67 L 251 64 L 280 64 L 257 43 L 249 30 L 251 29 L 276 43 L 300 54 L 329 64 L 356 71 L 360 73 L 364 78 L 364 88 L 358 95 L 348 95 L 308 89 L 297 89 L 282 95 L 275 102 L 271 109 L 270 117 L 277 107 L 288 101 L 356 100 L 368 97 L 377 89 L 384 74 L 386 60 L 382 49 L 375 43 L 368 40 L 301 25 L 249 6 L 217 0 L 190 0 L 169 3 L 148 9 L 106 25 L 39 41 Z M 200 325 L 203 325 L 206 328 L 206 331 L 202 334 L 197 330 Z M 200 287 L 205 288 L 210 294 L 209 300 L 202 305 L 196 303 L 193 299 L 194 291 Z M 199 241 L 205 242 L 211 249 L 211 256 L 205 262 L 198 262 L 194 260 L 190 253 L 192 246 Z M 194 201 L 202 199 L 211 204 L 213 208 L 213 214 L 207 222 L 197 223 L 190 217 L 189 208 Z M 197 155 L 205 155 L 209 157 L 214 165 L 213 173 L 209 178 L 205 180 L 197 180 L 192 177 L 189 172 L 189 163 Z"/></svg>
+    <span class="mono" style="color:#fff;font-weight:700">tided</span>
+    <span>fresh data, locally, with your own private AI</span>
+    <div class="right">
+      <a href="https://github.com/veronaimars/tided">GitHub</a>
+      <a href="#how">Docs</a>
+      <a href="#pricing">Pricing</a>
+      <a class="egg" href="https://k3sm.io" aria-label="k3sm">·</a>
+      <a class="egg" href="https://oakfall.app" aria-label="oakfall">·</a>
+    </div>
+  </div>
+</footer>
