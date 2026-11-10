@@ -1,6 +1,6 @@
 # tided.io
 
-Landing page for tided: a daemon that keeps your agent's grounding current, on your own machine.
+Landing page for TIDED: a daemon that keeps your agent's grounding current, on your own machine.
 
 Static HTML, served by GitHub Pages at https://tided.io. No build step: edit `index.html`, push.
 
